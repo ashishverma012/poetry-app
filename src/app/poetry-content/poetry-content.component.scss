@@ -1,0 +1,22 @@
+::ng-deep {
+    .mat-form-field-wrapper {
+        .mat-form-field-infix {
+            width: 348px;
+            @media (min-width: 768px) and (max-width: 1023px) {
+                width: 211px;
+            }
+        }
+    }
+}
+.submitButton {
+    background-color: #40c2cb;
+    border: #40c2cb;
+    color: #42145f;
+}
+.submitButton:disabled {
+    color: #fff;
+    background-color: #9e9798;
+}
+.searchContentWrapper {
+    padding-top: 10%;
+}
