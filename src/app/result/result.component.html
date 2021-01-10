@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col-12">
         <h1 class="mt-3">Poetry Results page</h1>
-        <p class="mt-3 mb-4">Rhyme Scheme: {{rhymePattern}}</p>
+        <p class="mt-3 mb-4">Rhyme Scheme: <strong>{{rhymePattern}}</strong></p>
         <p *ngFor="let lines of poetryData" [value]="lines" class="mb-0 poetryLines">{{lines}}</p>
       </div>
     </div>
