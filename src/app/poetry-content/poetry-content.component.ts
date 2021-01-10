@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import { tap, startWith, debounceTime, distinctUntilChanged, switchMap, map, switchMapTo } from 'rxjs/operators';
+import { startWith, debounceTime, distinctUntilChanged, switchMap, map, filter } from 'rxjs/operators';
 import { PoetryService } from '../core/services/poetry.service';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class PoetryContentComponent implements OnInit {
   titleControl = new FormControl();
   filteredAuthorOptions: Observable<any[]>;
   filteredTitleOptions: Observable<any[]>;
-  isButtonDisable:boolean = true;
+  isButtonDisable = true;
 
   constructor(private poetryService: PoetryService, private router: Router) {
     this.filteredAuthorOptions = this.authorControl.valueChanges.pipe(
@@ -24,9 +24,9 @@ export class PoetryContentComponent implements OnInit {
       debounceTime(400),
       distinctUntilChanged(),
       switchMap(val => {
-            return this.filterAuthorData(val || '')
-       }) 
-    )
+            return this.filterAuthorData(val || '');
+       })
+    );
     this.titleControl.disable();
    }
 
@@ -36,14 +36,14 @@ export class PoetryContentComponent implements OnInit {
   filterAuthorData(search: string): Observable<any[]> {
     return this.poetryService.getAuthorData()
      .pipe(
-      map(response => response.filter(option => { 
-         return option.toLowerCase().indexOf(search.toLowerCase()) === 0
+      map(response => response.filter(option => {
+         return option.toLowerCase().indexOf(search.toLowerCase()) === 0;
        }))
-     )
+     );
    }
 
    selectAuthor(event) {
-     if(event.source.selected) {
+     if (event.source.selected) {
       this.titleControl.enable();
       this.titleControl.setValue('');
       this.filteredTitleOptions = this.titleControl.valueChanges.pipe(
@@ -51,14 +51,14 @@ export class PoetryContentComponent implements OnInit {
         debounceTime(400),
         distinctUntilChanged(),
         switchMap(val => {
-              return this.filterTitleData(val || '', event.source.value)
-         }) 
-      )
+              return this.filterTitleData(val || '', event.source.value);
+         })
+      );
     }
    }
-   
+
    handleEmptyAuthor(value: any){
-    if(value === '') {
+    if (value === '') {
       this.titleControl.setValue('');
       this.titleControl.disable();
       this.isButtonDisable = true;
@@ -66,13 +66,13 @@ export class PoetryContentComponent implements OnInit {
   }
 
   handleEmptyTitle(value: any){
-    if(value === '') {
+    if (value === '') {
       this.isButtonDisable = true;
     }
   }
 
    selectTitle(event) {
-    if(event.source.selected) {
+    if (event.source.selected) {
       this.isButtonDisable = false;
     }
    }
@@ -80,16 +80,16 @@ export class PoetryContentComponent implements OnInit {
    filterTitleData(val: string, selectedAuthor): Observable<any[]> {
     return this.poetryService.getTitleData(selectedAuthor)
      .pipe(
-       map(response => response.filter(option => { 
-         return option.title.toLowerCase().indexOf(val.toLowerCase()) === 0
+       map(response => response.filter(option => {
+         return option.title.toLowerCase().indexOf(val.toLowerCase()) === 0;
        }))
-     )
+     );
    }
 
    getPoemData() {
      this.poetryService.searchPoetry(this.authorControl.value, this.titleControl.value).subscribe((results) => {
-      this.poetryService.savePoetryData(results[0].lines); 
+      this.poetryService.savePoetryData(results[0].lines);
       this.router.navigate(['result']);
-    })
+    });
    }
 }
