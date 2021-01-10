@@ -34,16 +34,12 @@ export class PoetryService {
     }
     searchPoetry(selectedAuthor, selectedTitle) {
         const poetryUrl = 'https://poetrydb.org/author,title/' + selectedAuthor + ';' + selectedTitle;
-        return this.poetryValues.length ? of(this.poetryValues) : this.http.get<any>(poetryUrl).pipe(tap(data => this.poetryValues = data));
+        return this.http.get<any>(poetryUrl);
     }
     savePoetryData(poetryData): any {
         this.sharePoetryData = poetryData;
     }
     getPoetryData(): any {
         return this.sharePoetryData;
-    }
-    getRhymePattern(firstWord) {
-        const ryhmeUrl = 'https://rhymebrain.com/talk?function=getRhymes&word=' + firstWord;
-        return this.rhymeValues.length ? of(this.rhymeValues) : this.http.get<any>(ryhmeUrl).pipe(tap(data => this.rhymeValues = data));
     }
 }
