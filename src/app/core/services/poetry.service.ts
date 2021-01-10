@@ -13,6 +13,7 @@ export class PoetryService {
     authorValues = [];
     titleValues = [];
     poetryValues = [];
+    rhymeValues = [];
     prevAuthor = '';
     sharePoetryData: any;
 
@@ -40,5 +41,9 @@ export class PoetryService {
     }
     getPoetryData(): any {
         return this.sharePoetryData;
+    }
+    getRhymePattern(firstWord) {
+        const ryhmeUrl = 'https://rhymebrain.com/talk?function=getRhymes&word=' + firstWord;
+        return this.rhymeValues.length ? of(this.rhymeValues) : this.http.get<any>(ryhmeUrl).pipe(tap(data => this.rhymeValues = data));
     }
 }

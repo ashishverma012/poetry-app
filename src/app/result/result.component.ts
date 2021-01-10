@@ -15,6 +15,13 @@ export class ResultComponent implements OnInit {
 
   ngOnInit(): void {
     this.poetryData =  this.poetryService.getPoetryData();
+    this.getRhymePattern();
+  }
+
+  getRhymePattern() {
+    this.poetryService.getRhymePattern('hello').subscribe((results) => {
+      console.log(results[0]);
+    });
   }
 
 }
