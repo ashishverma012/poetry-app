@@ -4,9 +4,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-1. Install depenedencies using command - `npm install -g @angular/cli`
+1. Install Angular to global `npm install -g @angular/cli`
 
-2. Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+2. Run command to install dependencies `npm i`
+
+3. Run `ng serve` to run dev server. 
+
+4. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
