@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { tap, map } from 'rxjs/operators';
 
@@ -15,16 +15,16 @@ export class PoetryService {
     poetryValues = [];
     rhymeValues = [];
     prevAuthor = '';
-    sharePoetryData: any;
+    private poetryArray = 'Poetry';
 
-    getAuthorData() {
+    getAuthorData(): Observable<any> {
         return this.authorValues.length ? of(this.authorValues) :
         this.http.get<any>('https://poetrydb.org/author').pipe(tap(data => this.authorValues = data.authors),
         map(data => {
             return data.authors;
        }));
     }
-    getTitleData(selectedAuthor) {
+    getTitleData(selectedAuthor): Observable<any> {
         if (this.prevAuthor !== selectedAuthor) {
             this.titleValues = [];
             this.prevAuthor = selectedAuthor;
@@ -32,14 +32,15 @@ export class PoetryService {
         const titleUrl = 'https://poetrydb.org/author/' + selectedAuthor + '/title';
         return this.titleValues.length ? of(this.titleValues) : this.http.get<any>(titleUrl).pipe(tap(data => this.titleValues = data));
     }
-    searchPoetry(selectedAuthor, selectedTitle) {
+    searchPoetry(selectedAuthor, selectedTitle): Observable<any> {
         const poetryUrl = 'https://poetrydb.org/author,title/' + selectedAuthor + ';' + selectedTitle;
         return this.http.get<any>(poetryUrl);
     }
     savePoetryData(poetryData): any {
-        this.sharePoetryData = poetryData;
+        localStorage.setItem(this.poetryArray, JSON.stringify(poetryData));
     }
     getPoetryData(): any {
-        return this.sharePoetryData;
+        const poetryResults = localStorage.getItem(this.poetryArray);
+        return JSON.parse(poetryResults);
     }
 }

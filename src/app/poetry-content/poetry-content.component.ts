@@ -30,7 +30,7 @@ export class PoetryContentComponent implements OnInit {
     this.titleControl.disable();
    }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
   filterAuthorData(search: string): Observable<any[]> {
@@ -42,7 +42,7 @@ export class PoetryContentComponent implements OnInit {
      );
    }
 
-   selectAuthor(event) {
+   selectAuthor(event): any {
      if (event.source.selected) {
       this.titleControl.enable();
       this.titleControl.setValue('');
@@ -57,7 +57,7 @@ export class PoetryContentComponent implements OnInit {
     }
    }
 
-   handleEmptyAuthor(value: any){
+   handleEmptyAuthor(value: any): void{
     if (value === '') {
       this.titleControl.setValue('');
       this.titleControl.disable();
@@ -65,13 +65,13 @@ export class PoetryContentComponent implements OnInit {
     }
   }
 
-  handleEmptyTitle(value: any){
+  handleEmptyTitle(value: any): void{
     if (value === '') {
       this.isButtonDisable = true;
     }
   }
 
-   selectTitle(event) {
+   selectTitle(event): void {
     if (event.source.selected) {
       this.isButtonDisable = false;
     }
@@ -86,7 +86,7 @@ export class PoetryContentComponent implements OnInit {
      );
    }
 
-   getPoemData() {
+   getPoemData(): void {
      this.poetryService.searchPoetry(this.authorControl.value, this.titleControl.value).subscribe((results) => {
       this.poetryService.savePoetryData(results[0].lines);
       this.router.navigate(['result']);

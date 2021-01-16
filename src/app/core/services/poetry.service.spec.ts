@@ -7,7 +7,6 @@ import { PoetryContentComponent } from '../../poetry-content/poetry-content.comp
 describe('PoetryService', () => {
   let httpClientSpy: { get: jasmine.Spy };
   let poetryService: PoetryService;
-  let poetryComponent: PoetryContentComponent;
   httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
   poetryService = new PoetryService(httpClientSpy as any);
 
@@ -17,12 +16,12 @@ describe('PoetryService', () => {
   });
 
   it('should test author', fakeAsync(() => {
-    let test =  spyOn(poetryService, 'getAuthorData');
+    const test =  spyOn(poetryService, 'getAuthorData');
     expect(test).toBeDefined();
   }));
 
   it('should test title', fakeAsync(() => {
-    let test =  spyOn(poetryService, 'getTitleData');
+    const test =  spyOn(poetryService, 'getTitleData');
     expect(test).toBeDefined();
   }));
 });
